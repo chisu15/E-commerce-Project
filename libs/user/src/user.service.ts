@@ -1,0 +1,33 @@
+import { Injectable } from '@nestjs/common';
+import { UserRepository } from '@app/database';
+import { ICreateUser, IListUser } from './user.interface';
+import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '@app/common';
+
+@Injectable()
+export class UserService {
+  constructor(private readonly userRepository: UserRepository) {}
+
+  async createUser(payload: ICreateUser) {
+    const user = await this.userRepository.isExist(payload.email, payload.phone);
+    if (!user) return null
+    return JSON.parse(JSON.stringify(await this.userRepository.create(payload)));
+  }
+
+  async getAll(params: IListUser) {
+    return JSON.parse(JSON.stringify(await this.userRepository.findAllWithMeta({
+          size: params.size || DEFAULT_PAGE_SIZE,
+          page: params.page || DEFAULT_PAGE,
+        })))
+  }
+  async getById(id: string) {
+    return JSON.parse(JSON.stringify(await this.userRepository.findById(id)))
+  }
+  
+  async updateUser(id: string, dto: Partial<ICreateUser>) {
+    return this.userRepository.update(id, dto);
+  }
+  
+  async deleteUser(id: string) {
+    return this.userRepository.delete(id);
+  }
+}
