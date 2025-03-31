@@ -40,9 +40,11 @@ export class UserController {
   async createUser(@Body() body: CreateUserDto) {
     try {
       const user = await this.userService.createUser(body)
-      return plainToInstance(UserResponseDto, user, {
+      return {
+        message: 'Tạo người dùng thành công!',
+        data: plainToInstance(UserResponseDto, user, {
         excludeExtraneousValues: true,
-      })
+      })}
     } catch (error) {
       return error.message
     }
@@ -50,7 +52,9 @@ export class UserController {
   @Get('detail/:id')
   async getUserById(@Param('id') id: string) {
     const user = await this.userService.getById(id)
-    return user
+    return plainToInstance(UserResponseDto, user, {
+      excludeExtraneousValues: true,
+    })
   }
 
   @Patch('update/:id')

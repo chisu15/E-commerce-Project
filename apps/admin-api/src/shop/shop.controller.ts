@@ -9,10 +9,18 @@ export class ShopController {
 
   @Get()
   async list(@Query() request: ListShopRequestDto) {
-    const { data, total } = await this.shopService.getAll(request);
+    const listShop = await this.shopService.getAll(request);
     return {
-      data: plainToInstance(ShopResponseDto, data, { excludeExtraneousValues: true }),
-    };
+      message: "Lấy danh sách shop thành công!",
+      data: (await listShop).data.length
+        ? (await listShop).data.map((item) =>
+            plainToInstance(ShopResponseDto, item, {
+              excludeExtraneousValues: true,
+            }),
+          )
+        : [],
+      pagination: (await listShop).pagination,
+    }
   }
 
   @Post()

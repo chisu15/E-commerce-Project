@@ -6,17 +6,18 @@ export interface IListShop {
 }
 
 export interface ICreateShop {
-  name: string
-
-  email: string
-
-  phone: string
-
-  status?: STATUS
-
-  createdBy: string
-
-  description?: string
-
-  avatar?: string
+  name: string;
+  email: string;
+  phone: string;
+  description?: string;
+  avatar?: string;
+  createdBy: string;
+}
+export interface IUpdateShop {
+  name?: string;
+  email?: string;
+  phone?: string;
+  status?: STATUS;
+  description?: string;
+  avatar?: string;
 }

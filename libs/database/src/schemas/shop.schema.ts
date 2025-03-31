@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
-import { STATUS } from '@app/common';
+import { Document, Types } from 'mongoose';
+import { STATUS } from '@app/common'; // enum bạn cần định nghĩa
 
 export type ShopDocument = Shop & Document;
 
@@ -15,11 +15,11 @@ export class Shop {
   @Prop({ required: true, unique: true })
   phone: string;
 
-  @Prop({ enum: STATUS, default: STATUS.PENDING, type: String })
+  @Prop({ type: String, enum: STATUS, default: STATUS.ACTIVE })
   status: STATUS;
 
-  @Prop({ required: true })
-  createdBy: string;
+  @Prop({ type: Types.ObjectId, ref: 'User', required: true })
+  createdBy: Types.ObjectId;
 
   @Prop()
   description?: string;

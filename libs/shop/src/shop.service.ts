@@ -2,6 +2,7 @@ import { Shop, ShopRepository } from '@app/database'
 import { Injectable } from '@nestjs/common'
 import { ICreateShop, IListShop } from './shop.interface'
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, STATUS } from '@app/common'
+import { Types } from 'mongoose'
 
 @Injectable()
 export class ShopService {
@@ -17,19 +18,14 @@ export class ShopService {
   async createShop(params: ICreateShop) {
     const newShop = {
       name: params.name,
-
       email: params.email,
-
       phone: params.phone,
-
-      status: STATUS.PENDING,
-
-      createdBy: params.createdBy,
-
       description: params.description,
-
       avatar: params.avatar,
-    } as Partial<Shop>
-    return this.shopRepository.create(newShop)
+      status: STATUS.PENDING,
+      createdBy: new Types.ObjectId(params.createdBy),
+    };
+
+    return this.shopRepository.create(newShop);
   }
 }

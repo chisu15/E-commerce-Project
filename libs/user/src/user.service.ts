@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { User, UserRepository } from '@app/database';
 import { ICreateUser, IListUser, IUpdateUser } from './user.interface';
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '@app/common';
@@ -8,8 +8,11 @@ export class UserService {
   constructor(private readonly userRepository: UserRepository) {}
 
   async createUser(payload: ICreateUser) {
-    const user = await this.userRepository.isExist(payload.email, payload.phone);
-    if (!user) return null
+    const existed = await this.userRepository.isExist(payload.email, payload.phone);
+
+    if (existed) {
+      throw new ConflictException('Email hoặc số điện thoại đã tồn tại');
+    }
     return JSON.parse(JSON.stringify(await this.userRepository.create(payload)));
   }
 

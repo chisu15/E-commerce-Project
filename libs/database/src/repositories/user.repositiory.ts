@@ -19,7 +19,7 @@ export class UserRepository {
   async findAllWithMeta(params: {
     page: number
     size: number
-  }) {
+  }): Promise<ListUserResponse> {
     const skip = (params.page - 1) * params.size
     const [data, total] = await Promise.all([
       this.userModel.find().skip(skip).limit(params.size).exec(),
@@ -32,7 +32,7 @@ export class UserRepository {
         size: params.size,
         page: params.page,
       },
-    }as ListUserResponse
+    }
   }
   async findById(id: string): Promise<User | null> {
     return (await this.userModel.findById(id).exec())
