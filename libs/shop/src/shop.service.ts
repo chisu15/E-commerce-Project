@@ -1,6 +1,6 @@
 import { Shop, ShopRepository } from '@app/database'
 import { Injectable } from '@nestjs/common'
-import { ICreateShop, IListShop } from './shop.interface'
+import { ICreateShop, IListShop, IUpdateShop } from './shop.interface'
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, STATUS } from '@app/common'
 import { Types } from 'mongoose'
 
@@ -9,13 +9,13 @@ export class ShopService {
   constructor(private readonly shopRepository: ShopRepository) {}
 
   async getAll(params: IListShop) {
-    return await this.shopRepository.findAllWithMeta({
+    return JSON.parse(JSON.stringify(await this.shopRepository.findAllWithMeta({
       size: params.size || DEFAULT_PAGE_SIZE,
       page: params.page || DEFAULT_PAGE,
-    })
+    })))
   }
 
-  async createShop(params: ICreateShop) {
+  async create(params: ICreateShop) {
     const newShop = {
       name: params.name,
       email: params.email,
@@ -26,6 +26,24 @@ export class ShopService {
       createdBy: new Types.ObjectId(params.createdBy),
     };
 
-    return this.shopRepository.create(newShop);
+    return JSON.parse(JSON.stringify(await this.shopRepository.create(newShop)));
+  }
+
+  async getById(id: string) {
+    return JSON.parse(
+      JSON.stringify(await this.shopRepository.findById(id)),
+    );
+  }
+
+  async update(id: string, data: IUpdateShop) {
+    return JSON.parse(
+      JSON.stringify(await this.shopRepository.update(id, data)),
+    );
+  }
+
+  async delete(id: string) {
+    return JSON.parse(
+      JSON.stringify(await this.shopRepository.delete(id)),
+    );
   }
 }

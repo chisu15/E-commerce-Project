@@ -19,6 +19,12 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
+      "@app/category": [
+        "libs/category/src"
+      ],
+      "@app/category/*": [
+        "libs/category/src/*"
+      ],
       "@app/common": [
         "libs/common/src"
       ],

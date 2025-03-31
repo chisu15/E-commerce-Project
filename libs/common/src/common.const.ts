@@ -14,6 +14,10 @@ export enum ROLE {
   ADMIN = 'admin',
   SELLER = 'seller',
 }
-
+export enum CATEGORY_TYPE {
+  PRODUCT = 'product',
+  BLOG = 'blog',
+  EVENT = 'event',
+}
 export const DEFAULT_PAGE_SIZE = 10
 export const DEFAULT_PAGE = 1

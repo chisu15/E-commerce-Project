@@ -41,7 +41,7 @@ export class ShopRepository {
   }
   
   async findById(id: string): Promise<Shop | null> {
-    return this.shopModel.findById(id).exec();
+    return this.shopModel.findById(id).populate('createdBy').exec();
   }
   
   async update(id: string, data: IUpdateShop): Promise<Shop | null> {

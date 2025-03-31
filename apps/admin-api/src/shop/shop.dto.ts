@@ -1,81 +1,116 @@
-import { IsEnum, IsNotEmpty, IsNumber, IsOptional, IsPositive, IsString } from 'class-validator';
-import { Expose, Type } from 'class-transformer';
-import { STATUS } from '@app/common';
+import {
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  IsEnum,
+  IsMongoId,
+} from 'class-validator'
+import { Expose, Transform, Type } from 'class-transformer'
+import { STATUS } from '@app/common'
 
 export class CreateShopDto {
   @IsString()
   @IsNotEmpty()
-  name: string;
+  name: string
 
   @IsString()
   @IsNotEmpty()
-  email: string;
+  email: string
 
   @IsString()
   @IsNotEmpty()
-  phone: string;
+  phone: string
 
-  @IsEnum(STATUS)
   @IsOptional()
-  status?: STATUS;
-
   @IsString()
+  description?: string
+
+  @IsOptional()
+  @IsString()
+  avatar?: string
+
+  @IsMongoId()
   @IsNotEmpty()
-  createdBy: string;
-
-  @IsOptional()
-  @IsString()
-  description?: string;
-
-  @IsOptional()
-  @IsString()
-  avatar?: string;
+  createdBy: string
 }
 
-export class ShopResponseDto {
-  @Expose()
-  _id: string;
+export class UpdateShopDto {
+  @IsOptional()
+  @IsString()
+  name?: string
 
-  @Expose()
-  name: string;
+  @IsOptional()
+  @IsString()
+  email?: string
 
-  @Expose()
-  email: string;
+  @IsOptional()
+  @IsString()
+  phone?: string
 
-  @Expose()
-  phone: string;
+  @IsOptional()
+  @IsEnum(STATUS)
+  status?: STATUS
 
-  @Expose()
-  status: STATUS;
+  @IsOptional()
+  @IsString()
+  description?: string
 
-  @Expose()
-  createdBy: string;
-
-  @Expose()
-  avatar?: string;
-
-  @Expose()
-  description?: string;
-
-  @Expose()
-  createdAt: Date;
+  @IsOptional()
+  @IsString()
+  avatar?: string
 }
 
 export class ListShopRequestDto {
-    //todo: add filter house
-  
-    @Expose({ name: 'page' })
-    @IsOptional()
-    @Type(() => Number)
-    @IsNumber()
-    @IsPositive()
-    page: number
-  
-    @Expose({ name: 'size' })
-    @IsOptional()
-    @Type(() => Number)
-    @IsNumber()
-    @IsPositive()
-    size: number
-  }
-  
+  @Expose({ name: 'page' })
+  @IsOptional()
+  page?: number
+
+  @Expose({ name: 'size' })
+  @IsOptional()
+  size?: number
+}
+export class UserMiniDto {
+  @Expose()
+  _id: string
+
+  @Expose()
+  firstName: string
+
+  @Expose()
+  lastName: string
+
+  @Expose()
+  email: string
+
+  @Expose()
+  avatar: string
+}
+export class ShopResponseDto {
+  @Expose()
+  _id: string
+
+  @Expose()
+  name: string
+
+  @Expose()
+  email: string
+
+  @Expose()
+  phone: string
+
+  @Expose()
+  status: STATUS
+
+  @Expose()
+  description?: string
+
+  @Expose()
+  avatar?: string
+
+  @Expose()
+  @Type(() => UserMiniDto)
+  createdBy: UserMiniDto;
+
+  @Expose()
+  createdAt: Date
+}
