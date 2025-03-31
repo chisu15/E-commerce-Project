@@ -1,12 +1,14 @@
+import { Types } from "mongoose";
+
 export interface ICreateCategory {
     title: string;
     description?: string;
     type: string;
     imgUrl?: string;
     slug: string;
-    createdBy: string;   // string vì sẽ được convert sang ObjectId
-    updatedBy?: string;
-    parentId?: string;
+    createdBy: Types.ObjectId | string;
+    updatedBy?: Types.ObjectId | string;
+    parentId?: Types.ObjectId | string;
   }
   
   export interface IUpdateCategory {
@@ -15,8 +17,8 @@ export interface ICreateCategory {
     type?: string;
     imgUrl?: string;
     slug?: string;
-    updatedBy?: string;
-    parentId?: string;
+    updatedBy?: Types.ObjectId | string;
+    parentId?: Types.ObjectId | string;
   }
   
   export interface IListCategory {

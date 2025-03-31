@@ -46,6 +46,15 @@
         "tsConfigPath": "libs/database/tsconfig.lib.json"
       }
     },
+    "product": {
+      "type": "library",
+      "root": "libs/product",
+      "entryFile": "index",
+      "sourceRoot": "libs/product/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/product/tsconfig.lib.json"
+      }
+    },
     "shop": {
       "type": "library",
       "root": "libs/shop",

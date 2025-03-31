@@ -1,22 +1,31 @@
-import { Injectable } from '@nestjs/common';
-import { CategoryRepository } from '@app/database';
-import { ICreateCategory, IUpdateCategory, IListCategory } from './category.interface';
-import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '@app/common';
-import { Types } from 'mongoose';
+import { Injectable } from '@nestjs/common'
+import { Category, CategoryRepository } from '@app/database'
+import {
+  ICreateCategory,
+  IUpdateCategory,
+  IListCategory,
+} from './category.interface'
+import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '@app/common'
+import { Types } from 'mongoose'
 
 @Injectable()
 export class CategoryService {
   constructor(private readonly categoryRepository: CategoryRepository) {}
 
-  async createCategory(payload: ICreateCategory) {
+  async create(payload: ICreateCategory) {
     const newCategory = {
       ...payload,
       createdBy: new Types.ObjectId(payload.createdBy),
-      updatedBy: payload.updatedBy ? new Types.ObjectId(payload.updatedBy) : undefined,
-      parentId: payload.parentId ? new Types.ObjectId(payload.parentId) : undefined,
-    };
+      updatedBy: payload.updatedBy
+        ? new Types.ObjectId(payload.updatedBy)
+        : undefined,
+      parentId: payload.parentId
+        ? new Types.ObjectId(payload.parentId)
+        : undefined,
+    }
 
-    return this.categoryRepository.create(newCategory);
+    return JSON.parse(
+        JSON.stringify(await this.categoryRepository.create(newCategory)))
   }
 
   async getAll(params: IListCategory) {
@@ -27,30 +36,36 @@ export class CategoryService {
           page: params.page || DEFAULT_PAGE,
         }),
       ),
-    );
+    )
   }
 
   async getById(id: string) {
     return JSON.parse(
       JSON.stringify(await this.categoryRepository.findById(id)),
-    );
+    )
   }
 
-  async updateCategory(id: string, data: IUpdateCategory) {
-    const updateData: Partial<ICreateCategory> = {
-      ...data,
-      updatedBy: data.updatedBy ? new Types.ObjectId(data.updatedBy) : undefined,
-      parentId: data.parentId ? new Types.ObjectId(data.parentId) : undefined,
-    };
-
+  async update(id: string, data: IUpdateCategory) {
+    const updateData = {
+      title: data.title,
+      description: data.description,
+      type: data.type,
+      imgUrl: data.imgUrl,
+      slug: data.slug,
+      updatedBy: data.updatedBy
+      ? new Types.ObjectId(data.updatedBy)
+      : undefined,
+      parentId: data.parentId
+        ? new Types.ObjectId(data.parentId)
+        : undefined,
+    } as Partial<Category>;
+    console.log('Update payload:', updateData);
     return JSON.parse(
       JSON.stringify(await this.categoryRepository.update(id, updateData)),
     );
   }
 
-  async deleteCategory(id: string) {
-    return JSON.parse(
-      JSON.stringify(await this.categoryRepository.delete(id)),
-    );
+  async delete(id: string) {
+    return JSON.parse(JSON.stringify(await this.categoryRepository.delete(id)))
   }
 }

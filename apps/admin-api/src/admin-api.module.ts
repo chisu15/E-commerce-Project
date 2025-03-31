@@ -4,7 +4,9 @@ import { ConfigModule } from '@nestjs/config'
 import { UserController } from './user/user.controller'
 import { UserModule } from '@app/user'
 import { ShopModule } from '@app/shop'
+import { CategoryModule } from '@app/category'
 import { ShopController } from './shop/shop.controller'
+import { CategoryController } from './category/category.controller'
 
 @Module({
   imports: [
@@ -14,9 +16,10 @@ import { ShopController } from './shop/shop.controller'
     }),
     DatabaseModule,
     UserModule,
-    ShopModule
+    ShopModule,
+    CategoryModule
   ],
-  controllers: [UserController, ShopController],
+  controllers: [UserController, ShopController, CategoryController],
   providers: [],
 })
 export class AdminApiModule {}

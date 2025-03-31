@@ -100,6 +100,7 @@
       "^@app/category(|/.*)$": "<rootDir>/libs/category/src/$1",
       "^@app/common(|/.*)$": "<rootDir>/libs/common/src/$1",
       "^@app/database(|/.*)$": "<rootDir>/libs/database/src/$1",
+      "^@app/product(|/.*)$": "<rootDir>/libs/product/src/$1",
       "^@app/shop(|/.*)$": "<rootDir>/libs/shop/src/$1",
       "^@app/user(|/.*)$": "<rootDir>/libs/user/src/$1"
     }

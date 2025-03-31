@@ -37,6 +37,12 @@
       "@app/database/*": [
         "libs/database/src/*"
       ],
+      "@app/product": [
+        "libs/product/src"
+      ],
+      "@app/product/*": [
+        "libs/product/src/*"
+      ],
       "@app/shop": [
         "libs/shop/src"
       ],

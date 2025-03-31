@@ -51,10 +51,13 @@ export class CategoryRepository {
   async update(id: string, data: Partial<Category>): Promise<Category> {
     return this.categoryModel
       .findByIdAndUpdate(id, data, { new: true })
+      .populate('createdBy updatedBy parentId')
       .exec();
   }
 
   async delete(id: string): Promise<Category> {
-    return this.categoryModel.findByIdAndDelete(id).exec();
+    return this.categoryModel.findByIdAndDelete(id)
+    .populate('createdBy updatedBy parentId')
+    .exec();
   }
 }
