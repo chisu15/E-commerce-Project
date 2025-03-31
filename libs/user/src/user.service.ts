@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { UserRepository } from '@app/database';
-import { ICreateUser, IListUser } from './user.interface';
+import { User, UserRepository } from '@app/database';
+import { ICreateUser, IListUser, IUpdateUser } from './user.interface';
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '@app/common';
 
 @Injectable()
@@ -23,11 +23,18 @@ export class UserService {
     return JSON.parse(JSON.stringify(await this.userRepository.findById(id)))
   }
   
-  async updateUser(id: string, dto: Partial<ICreateUser>) {
-    return this.userRepository.update(id, dto);
+  async updateUser(id: string, dto: IUpdateUser): Promise<User | null> {
+    const existing = await this.userRepository.findById(id);
+    if (!existing) return null;
+  
+    return JSON.parse(JSON.stringify(await this.userRepository.update(id, dto)));
   }
   
-  async deleteUser(id: string) {
-    return this.userRepository.delete(id);
+  
+  async deleteUser(id: string): Promise<User | null> {
+    const existing = await this.userRepository.findById(id);
+    if (!existing) return null;
+  
+    return await this.userRepository.delete(id);
   }
 }

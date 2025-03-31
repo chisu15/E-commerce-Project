@@ -14,3 +14,11 @@ export interface ICreateUser {
   gender: GENDER
   avatar?: string
 }
+
+export interface IUpdateUser {
+  firstName?: string;
+  lastName?: string;
+  phone?: string;
+  gender?: GENDER;
+  avatar?: string;
+}

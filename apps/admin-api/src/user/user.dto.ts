@@ -67,6 +67,9 @@ export class UserResponseDto {
 
   @Expose()
   createdAt: Date
+
+  @Expose()
+  updatedAt: Date
 }
 export class ListUserRequestDto {
   //todo: add filter house

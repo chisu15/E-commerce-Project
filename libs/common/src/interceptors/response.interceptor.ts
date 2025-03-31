@@ -26,8 +26,8 @@ import { PaginationResponseDto } from '../dtos/common.dto'
       return next.handle().pipe(
         map((data) => {
           return {
-            message: data?.message || null,
-            data: !data?.message ? instanceToPlain(data?.data || data) : null,
+            message: typeof data === 'object' && 'message' in data ? data.message : null,
+            data: typeof data === 'object' && 'data' in data ? instanceToPlain(data.data) : instanceToPlain(data),
             timestamp: new Date().getTime(),
             total_count: data?.totalCount || null,
             meta_data: data?.metaData || null,

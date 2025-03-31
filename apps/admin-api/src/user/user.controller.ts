@@ -54,24 +54,40 @@ export class UserController {
   }
 
   @Patch('update/:id')
-  async updateUser(@Param('id') id: string, @Body() dto: UpdateUserDto) {
-    const updated = await this.userService.updateUser(id, dto)
+  async updateUser(@Param('id') id: string, @Body() body: UpdateUserDto) {
+    const updated = await this.userService.updateUser(id, body);
+  
+    if (!updated) {
+      return {
+        message: 'Người dùng không tồn tại',
+        data: null,
+      };
+    }
+    
     return {
       message: 'Cập nhật người dùng thành công',
       data: plainToInstance(UserResponseDto, updated, {
         excludeExtraneousValues: true,
       }),
-    }
+    };
   }
 
   @Delete('delete/:id')
   async deleteUser(@Param('id') id: string) {
-    const deleted = await this.userService.deleteUser(id)
+    const deleted = await this.userService.deleteUser(id);
+  
+    if (!deleted) {
+      return {
+        message: 'Không tìm thấy người dùng',
+        data: null,
+      };
+    }
+  
     return {
       message: 'Xoá người dùng thành công',
-      data: plainToInstance(UserResponseDto, deleted, {
+      data: plainToInstance(UserResponseDto, JSON.parse(JSON.stringify(deleted)), {
         excludeExtraneousValues: true,
       }),
-    }
+    };
   }
 }
