@@ -30,7 +30,7 @@ import {
         excludeExtraneousValues: true,
       })}
     }
-  
+
     @Get()
     async getCategories(@Query() query: ListCategoryRequestDto) {
       const result = await this.categoryService.getAll(query);

@@ -19,5 +19,11 @@ export enum CATEGORY_TYPE {
   BLOG = 'blog',
   EVENT = 'event',
 }
+
+export enum PRODUCT_STATUS {
+  ACTIVE = 'active',
+  INACTIVE = 'inactive',
+  DRAFT = 'draft',
+}
 export const DEFAULT_PAGE_SIZE = 10
 export const DEFAULT_PAGE = 1

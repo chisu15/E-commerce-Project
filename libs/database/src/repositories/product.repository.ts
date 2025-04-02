@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Product, ProductDocument } from '../schemas/product.schema';
 import { Model, Types } from 'mongoose';
-import { IListProduct } from '@app/product';
+import { ListProductResponse } from './interfaces/product.interface';
 
 @Injectable()
 export class ProductRepository {
@@ -16,7 +16,10 @@ export class ProductRepository {
     return await product.save();
   }
 
-  async findAllWithMeta(params: IListProduct) {
+  async findAllWithMeta(params: {
+    page: number;
+    size: number;
+  }): Promise<ListProductResponse> {
     const page = params.page || 1;
     const size = params.size || 10;
     const skip = (page - 1) * size;
