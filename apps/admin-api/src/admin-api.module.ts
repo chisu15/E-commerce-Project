@@ -9,6 +9,8 @@ import { ShopController } from './shop/shop.controller'
 import { CategoryController } from './category/category.controller'
 import { ProductModule } from '@app/product'
 import { ProductController } from './product/product.controller'
+import { AuthModule } from '@app/auth'
+import { AuthController } from './auth/auth.controller'
 
 @Module({
   imports: [
@@ -20,9 +22,10 @@ import { ProductController } from './product/product.controller'
     UserModule,
     ShopModule,
     CategoryModule,
-    ProductModule
+    ProductModule,
+    AuthModule,
   ],
-  controllers: [UserController, ShopController, CategoryController, ProductController],
+  controllers: [UserController, ShopController, CategoryController, ProductController, AuthController],
   providers: [],
 })
 export class AdminApiModule {}

@@ -13,7 +13,7 @@ import { Product } from '@app/database';
 export class ProductService {
   constructor(private readonly productRepository: ProductRepository) {}
 
-  async createProduct(data: ICreateProduct) {
+  async create(data: ICreateProduct) {
     const productData: Partial<Product> = {
       ...data,
       categoryId: new Types.ObjectId(data.categoryId),
@@ -42,7 +42,7 @@ export class ProductService {
     );
   }
 
-  async updateProduct(id: string, data: IUpdateProduct) {
+  async update(id: string, data: IUpdateProduct) {
     const updateData: Partial<Product> = {
         ...data,
         categoryId: data.categoryId
@@ -65,7 +65,7 @@ export class ProductService {
     );
   }
 
-  async deleteProduct(id: string) {
+  async delete(id: string) {
     return JSON.parse(
       JSON.stringify(await this.productRepository.delete(id)),
     );

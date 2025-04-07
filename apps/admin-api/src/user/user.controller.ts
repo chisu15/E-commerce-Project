@@ -16,12 +16,14 @@ import {
   UserResponseDto,
 } from './user.dto'
 import { plainToInstance } from 'class-transformer'
+import { Auth, RoleType, User } from '@app/auth'
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
+  @Auth(RoleType.ADMIN)
   async getUsers(@Query() request: ListUserRequestDto) {
     const listUser = this.userService.getAll(request)
     return {
